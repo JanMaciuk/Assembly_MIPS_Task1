@@ -1,6 +1,6 @@
 .data
-licz1: .word 25
-licz2: .word 4
+licz1: .word 11
+licz2: .word 10
 wyn:   .word 0
 status: .word 0 #wartoœæ zmieni siê je¿eli nast¹pi nadmiar
 string: .asciiz "Nastapil nadmiar, polecam mniejsze liczby"
@@ -18,13 +18,14 @@ andi $t5, $t2, 1 # Sprawdzam czy ostatnia cyfra licz2 jest 0 czy 1, jeœli jest 1
 blez $t5 przesun # Je¿eli ostatnia/obecna cyfra licz2 to zero, nic nie dodajemy tylko przesuwamy
 addu $t0, $t0, $t1 # Je¿eli ostatnia/obecna cyfra licz2 to jeden, dodajemy do wyniku mno¿n¹ (mno¿enie przez jeden nic nie zmienia)
 bltz $t0, overflow # Je¿eli wynik bêdzie ujemny, to wiem ¿e dosz³o do overlow
-j przesun
+j przesun 	  # Je¿eli nie dosz³o do overflow, to przesuwamy
 
 
 end: 
 #Koniec programu
 li $v0, 1   # wartoœæ dla syscall do wyœwietlania liczby
 move $a0, $t0 # liczba do wyœwietlenia
+sw $t0, wyn # zapisujê wynik do pamiêci
 syscall 
 #Ewentualnie mo¿na robiæ syscall 35 (print liczby dziesiêtnej jako binarn¹)
 
